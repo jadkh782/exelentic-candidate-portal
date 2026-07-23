@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Overview :: CENIS Portal</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
+    .tile { background:#fff; border:1px solid #999; box-shadow:2px 2px 0 #b8b0a4; padding:12px 16px; display:inline-block; vertical-align:top; margin:6px; min-width:120px; }
+    .tile-num { font-family:Verdana; font-size:26px; color:#1a3a5c; font-weight:bold; }
+    .tile-lbl { font-family:Verdana; font-size:10px; color:#777; text-transform:uppercase; letter-spacing:1px; }
+    .quick a { font-family:Verdana; font-size:12px; color:#1a3a5c; }
+  </style>
+</head>
+<body>
+  <%- include('partials/topbar', { subtitle: 'Recruitment Overview', active: 'overview' }) %>
+
+  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#d4ccc0;padding:4px 20px;border-bottom:1px solid #999;" <%= chaosDataAttrs() %>>
+    <font face="Verdana" size="1" color="#555">Home &gt; <b>Overview</b></font>
+  </div>
+
+  <%- legacyCruft() %>
+
+  <div style="padding:20px;">
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+      <font face="Verdana" size="4" color="#333"><b>Welcome back, Administrator</b></font><br>
+      <font face="Verdana" size="2" color="#777">Recruitment pipeline summary as of session start.</font>
+      <hr style="border:0;border-top:1px solid #c0b8ac;margin:12px 0">
+    </div>
+
+    <!-- KPI tiles, each wrapped differently -->
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+        <div class="tile" id="<%= chaosId() %>"><div class="tile-num"><%= candidates.length %></div><div class="tile-lbl">Total Candidates</div></div>
+      </span></div>
+      <div class="tile" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><div class="tile-num"><%= byStatus['Interview Scheduled'] || 0 %></div><div class="tile-lbl">Interviewing</div></div>
+      <span id="<%= chaosId() %>"><div class="tile" id="<%= chaosId() %>"><div class="tile-num"><%= byStatus['Offer Extended'] || 0 %></div><div class="tile-lbl">Offers Out</div></div></span>
+      <div class="tile" id="<%= chaosId() %>"><div class="tile-num"><%= byStatus['Under Review'] || 0 %></div><div class="tile-lbl">Under Review</div></div>
+      <div class="tile" id="<%= chaosId() %>"><div class="tile-num"><%= byStatus['Rejected'] || 0 %></div><div class="tile-lbl">Rejected</div></div>
+    </div>
+
+    <%- legacyCruft() %>
+    <br>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr valign="top">
+      <!-- quick actions -->
+      <td width="40%">
+        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px;margin-right:10px" <%= chaosDataAttrs() %>>
+          <font face="Verdana" size="2" color="#333"><b>Quick Actions</b></font>
+          <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
+          <div class="quick" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <div style="padding:4px 0"><a href="/dashboard" id="<%= chaosId() %>" <%= chaosDataAttrs() %>>&#128203; View all candidate records</a></div>
+            <div style="padding:4px 0"><span onclick="window.location='/candidates/new'" style="cursor:pointer;color:#1a3a5c;font-family:Verdana;font-size:12px" id="<%= chaosId() %>" <%= chaosDataAttrs() %>>&#10133; Register new application</span></div>
+            <div style="padding:4px 0"><a href="/reports" id="<%= chaosId() %>" <%= chaosDataAttrs() %>>&#128200; Open reporting dashboard</a></div>
+            <div style="padding:4px 0"><a href="/archive" id="<%= chaosId() %>" <%= chaosDataAttrs() %>>&#128451; Browse archived / rejected</a></div>
+          </div>
+        </div>
+      </td>
+
+      <!-- positions breakdown -->
+      <td>
+        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px" <%= chaosDataAttrs() %>>
+          <font face="Verdana" size="2" color="#333"><b>Applications by Position</b></font>
+          <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
+          <table border="0" cellpadding="3" cellspacing="0" width="100%" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <% Object.keys(byPosition).sort().forEach(function(pos){ %>
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td><font face="Verdana" size="1" color="#333"><%= pos %></font></td>
+                <td align="right" width="40"><font face="Verdana" size="1" color="#1a3a5c"><b><%= byPosition[pos] %></b></font></td>
+                <td width="120"><div style="background:#e0d8cc;height:9px;border:1px solid #c0b8ac"><div style="background:#5c7a1a;height:9px;width:<%= Math.round((byPosition[pos]/candidates.length)*100) %>%"></div></div></td>
+              </tr>
+            <% }); %>
+          </table>
+        </div>
+      </td>
+    </tr></table>
+  </div>
+
+  <%- easterEgg() %>
+  <%- legacyCruft() %>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reports :: CENIS Portal</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
+    .bar-row td { font-family:Verdana; font-size:11px; }
+  </style>
+</head>
+<body>
+  <%- include('partials/topbar', { subtitle: 'Reporting', active: 'reports' }) %>
+
+  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#d4ccc0;padding:4px 20px;border-bottom:1px solid #999;" <%= chaosDataAttrs() %>>
+    <font face="Verdana" size="1" color="#555">Home &gt; <b>Reports</b></font>
+  </div>
+
+  <%- legacyCruft() %>
+
+  <div style="padding:20px;">
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+      <font face="Verdana" size="3" color="#333"><b>Recruitment Analytics</b></font>
+      <font face="Verdana" size="1" color="#888">&nbsp;&nbsp;avg. experience: <b><%= avgExp %></b> yrs across <%= candidates.length %> candidates</font>
+      <hr style="border:0;border-top:1px solid #c0b8ac;margin:12px 0">
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr valign="top">
+      <!-- by status -->
+      <td width="50%">
+        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px;margin-right:10px" <%= chaosDataAttrs() %>>
+          <font face="Verdana" size="2" color="#333"><b>Candidates by Status</b></font>
+          <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
+          <table border="0" cellpadding="3" cellspacing="0" width="100%" class="bar-row" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <% Object.keys(byStatus).sort().forEach(function(k){ %>
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td width="130"><font color="#333"><%= k %></font></td>
+                <td><div style="background:#e0d8cc;height:12px;border:1px solid #c0b8ac"><div style="background:#1a3a5c;height:12px;width:<%= Math.round((byStatus[k]/candidates.length)*100) %>%"></div></div></td>
+                <td width="30" align="right"><font color="#1a3a5c"><b><%= byStatus[k] %></b></font></td>
+              </tr>
+            <% }); %>
+          </table>
+        </div>
+      </td>
+
+      <!-- by city -->
+      <td>
+        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px" <%= chaosDataAttrs() %>>
+          <font face="Verdana" size="2" color="#333"><b>Candidates by City</b></font>
+          <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
+          <table border="0" cellpadding="3" cellspacing="0" width="100%" class="bar-row" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <% Object.keys(byCity).sort().forEach(function(k){ %>
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td width="110"><font color="#333"><%= k %></font></td>
+                <td><div style="background:#e0d8cc;height:12px;border:1px solid #c0b8ac"><div style="background:#5c7a1a;height:12px;width:<%= Math.round((byCity[k]/candidates.length)*100) %>%"></div></div></td>
+                <td width="30" align="right"><font color="#5c7a1a"><b><%= byCity[k] %></b></font></td>
+              </tr>
+            <% }); %>
+          </table>
+        </div>
+      </td>
+    </tr></table>
+
+    <%- legacyCruft() %>
+    <br>
+
+    <!-- position table -->
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px" <%= chaosDataAttrs() %>>
+      <font face="Verdana" size="2" color="#333"><b>Applications by Position</b></font>
+      <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
+      <table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse;border:1px solid #ccc" width="60%" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+        <tr bgcolor="#e8e0d4"><td><font face="Verdana" size="1"><b>Position</b></font></td><td><font face="Verdana" size="1"><b>Count</b></font></td></tr>
+        <% Object.keys(byPosition).sort().forEach(function(k){ %>
+          <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <td><font face="Verdana" size="1"><%= k %></font></td>
+            <td align="center"><font face="Verdana" size="1"><%= byPosition[k] %></font></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+  </div>
+
+  <%- easterEgg() %>
+  <%- legacyCruft() %>
+</body>
+</html>

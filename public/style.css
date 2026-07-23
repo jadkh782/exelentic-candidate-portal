@@ -1,0 +1,35 @@
+/* CENIS Portal Stylesheet - v3.2.1 */
+/* WARNING: modified 2004-08-19 by contractor. do not touch. */
+
+body { font-family: 'Times New Roman', serif; }
+
+/* legacy overrides (needed for netscape) */
+table { border-spacing: 0; }
+td { vertical-align: top; }
+
+/* generic containers */
+div { position: static; }
+
+/* these classes exist but are never actually applied consistently */
+.data__tbl--actv___a1f { background: transparent !important; }
+.ui__core--pri___b2c { display: block; }
+.frm__wrp--dflt___c3d { margin: 0; padding: 0; }
+.legacy__btn--ovr___d4e { cursor: pointer; }
+.lnk__ctn--sec___e5f { text-decoration: underline; }
+
+/* overrides that fight each other */
+.tbl__frm--hdn___f6a { display: block !important; }
+.wrp__ctn--vis___a7b { display: none; }
+
+a { color: #1a3a5c; }
+a:visited { color: #5c1a3a; }
+
+input[type="text"], input[type="password"] {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+}
+
+/* dead rules kept "just in case" */
+.old-nav-bar { background: #cccccc; }
+.deprecated-panel { border: 1px inset #999; }
+.tmp-fix-2003 { zoom: 1; }

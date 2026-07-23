@@ -1,0 +1,48 @@
+<%
+  // expects: subtitle (string), active (string key)
+  var navItems = [
+    { key: 'overview',  href: '/overview',       label: 'Home' },
+    { key: 'candidates',href: '/dashboard',      label: 'Candidates' },
+    { key: 'new',       href: '/candidates/new', label: 'New Application' },
+    { key: 'archive',   href: '/archive',        label: 'Archive' },
+    { key: 'reports',   href: '/reports',        label: 'Reports' },
+    { key: 'settings',  href: '/settings',       label: 'Account' }
+  ];
+%>
+<!-- primary header bar -->
+<div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#1a3a5c">
+    <tr>
+      <td><div style="padding:8px 20px;"><font color="#ffffff" face="Verdana" size="4"><b>CENIS</b></font><font color="#88aacc" face="Verdana" size="2">&nbsp;|&nbsp;<%= subtitle %></font></div></td>
+      <td align="right"><div style="padding:8px 20px;"><font color="#66889c" face="Verdana" size="1">admin@cenis&nbsp;&nbsp;</font><a href="/settings" style="color:#88aacc;font-family:Verdana;font-size:11px;">[ Account ]</a>&nbsp;<a href="/logout" style="color:#88aacc;font-family:Verdana;font-size:11px;">[ Log Out ]</a></div></td>
+    </tr>
+  </table>
+</div>
+
+<!-- decoy nav (hidden) with the same link labels to bait naive selectors -->
+<div style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+  <ul id="<%= chaosId() %>" class="<%= chaosClass() %>">
+    <% navItems.forEach(function(n){ %><li id="<%= chaosId() %>"><a href="/null" tabindex="-1"><%= n.label %></a></li><% }); %>
+  </ul>
+</div>
+
+<%- legacyCruft() %>
+
+<!-- REAL navigation bar: each item wrapped differently -->
+<div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#c0b8ac;border-bottom:1px solid #8a8172;border-top:1px solid #d8d0c4;" <%= chaosDataAttrs() %>>
+  <table border="0" cellspacing="0" cellpadding="0"><tr>
+    <% navItems.forEach(function(n, i){ %>
+      <td id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="border-right:1px solid #a89f90;<%= n.key === active ? 'background:#e8e0d4;' : '' %>">
+        <% if (i % 3 === 0) { %>
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+            <a href="<%= n.href %>" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="display:block;padding:6px 16px;font-family:Verdana;font-size:11px;text-decoration:none;color:<%= n.key === active ? '#1a3a5c' : '#3a3a3a' %>;<%= n.key === active ? 'font-weight:bold;' : '' %>"><%= n.label %></a>
+          </span></div>
+        <% } else if (i % 3 === 1) { %>
+          <span id="<%= chaosId() %>" class="<%= chaosClass() %>"><span onclick="window.location='<%= n.href %>'" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="display:inline-block;padding:6px 16px;font-family:Verdana;font-size:11px;cursor:pointer;color:<%= n.key === active ? '#1a3a5c' : '#3a3a3a' %>;<%= n.key === active ? 'font-weight:bold;' : '' %>"><%= n.label %></span></span>
+        <% } else { %>
+          <div role="link" tabindex="0" onclick="location.href='<%= n.href %>'" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> aria-label="menu entry" style="padding:6px 16px;font-family:Verdana;font-size:11px;cursor:pointer;color:<%= n.key === active ? '#1a3a5c' : '#3a3a3a' %>;<%= n.key === active ? 'font-weight:bold;' : '' %>"><%= n.label %></div>
+        <% } %>
+      </td>
+    <% }); %>
+  </tr></table>
+</div>

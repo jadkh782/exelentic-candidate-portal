@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Record <%= candidate.id %> :: CENIS Portal</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
+    .fld-lbl { font-family: Verdana; font-size: 10px; color: #555; }
+    .fld-val { font-family: Verdana; font-size: 12px; color: #000; }
+  </style>
+</head>
+<body>
+  <%- include('partials/topbar', { subtitle: 'Record Detail', active: 'candidates' }) %>
+
+  <!-- Breadcrumb pointing to wrong pages -->
+  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#d4ccc0;padding:4px 20px;border-bottom:1px solid #999;">
+    <font face="Verdana" size="1" color="#555">Home &gt; Settings &gt; Export &gt; <b>Detail View</b></font>
+  </div>
+
+  <div style="padding:20px;">
+    <!-- DECOY detail block with same-looking fields, hidden -->
+    <div style="position:absolute;left:-9999px;opacity:0">
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+        <span class="fld-val" id="<%= chaosId() %>">Placeholder Name</span>
+        <span class="fld-val" id="<%= chaosId() %>">CND-0000</span>
+        <a href="#" class="<%= chaosClass() %>" id="<%= chaosId() %>" tabindex="-1">Download CV</a>
+      </div>
+    </div>
+
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+        <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:2px solid #999;padding:20px;max-width:700px;box-shadow:3px 3px 0 #888;">
+
+            <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+              <center><font face="Verdana" size="3" color="#1a3a5c"><b><%= candidate.name %></b></font></center>
+              <center><font face="Courier New" size="2" color="#666"><%= candidate.id %></font></center>
+              <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+            </div>
+
+            <%- legacyCruft() %>
+            <%- ghostElement('input') %>
+
+            <!-- Detail fields, each with different nesting depth and structure -->
+            <table width="100%" border="0" cellpadding="6" cellspacing="0" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td width="35%" valign="top"><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span class="fld-lbl" id="<%= chaosId() %>">Full Name</span></div></td>
+                <td><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><span class="fld-val" id="<%= chaosId() %>"><%= candidate.name %></span></span></div></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Unique Identifier</span></td>
+                <td><table border="0"><tr><td><div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><code class="fld-val" id="<%= chaosId() %>"><%= candidate.id %></code></div></td></tr></table></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td valign="top"><div id="<%= chaosId() %>"><div id="<%= chaosId() %>"><span class="fld-lbl" id="<%= chaosId() %>">E-Mail Address</span></div></div></td>
+                <td><span id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>"><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.email %></span></span></span></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Telephone</span></td>
+                <td><div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><ul style="margin:0;padding:0;list-style:none"><li id="<%= chaosId() %>"><span class="fld-val"><%= candidate.phone %></span></li></ul></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">City</span></td>
+                <td><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.city %></span></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Position Applied For</span></td>
+                <td><div id="<%= chaosId() %>"><div id="<%= chaosId() %>"><div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><span class="fld-val" id="<%= chaosId() %>"><%= candidate.position_applied %></span></div></div></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Years of Experience</span></td>
+                <td><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.experience_years %></span></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Current Status</span></td>
+                <td><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" style="font-family:Verdana;font-size:11px;padding:2px 6px;background:<%= candidate.status === 'Rejected' ? '#ffcccc' : candidate.status === 'Offer Extended' ? '#ccffcc' : '#ffffcc' %>;border:1px solid #999;"><%= candidate.status %></span></div></td>
+              </tr>
+            </table>
+
+            <%- legacyCruft() %>
+            <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+
+            <!-- CV download: deeply nested, uses an iframe wrapper for extra pain -->
+            <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+              <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <span id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                      <center>
+                        <a href="/download-cv/<%= candidate.id %>" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="background:#5c7a1a;color:#fff;border:1px solid #000;padding:8px 25px;font-family:Verdana;font-size:12px;text-decoration:none;display:inline-block;">
+                          &#128196;&nbsp;Download Curriculum Vitae (PDF)
+                        </a>
+                      </center>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+
+            <%- ghostElement('link') %>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <br>
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+      <font face="Verdana" size="1" color="#888">Record last modified: 2004-<%= String(1 + Math.floor(Math.random()*12)).padStart(2,'0') %>-<%= String(1 + Math.floor(Math.random()*28)).padStart(2,'0') %> by SYSTEM_BATCH</font>
+    </div>
+  </div>
+
+  <%- ghostElement('button') %>
+  <%- easterEgg() %>
+  <%- legacyCruft() %>
+</body>
+</html>

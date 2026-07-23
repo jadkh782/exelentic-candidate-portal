@@ -1,0 +1,19 @@
+[
+  { "id": "CND-7391", "name": "Markus Lehmann", "email": "m.lehmann@mailhaus.de", "phone": "+49 171 9283746", "status": "Under Review", "position_applied": "Senior Mechanical Engineer", "city": "Stuttgart", "experience_years": 12 },
+  { "id": "CND-0458", "name": "Aylin Demir", "email": "aylin.demir@webpost.com", "phone": "+49 152 4839201", "status": "Interview Scheduled", "position_applied": "Software Developer", "city": "Berlin", "experience_years": 5 },
+  { "id": "CND-6612", "name": "Hans-Peter Gruber", "email": "hp.gruber@altmail.net", "phone": "+49 160 7382910", "status": "New", "position_applied": "Gardener / Landscaper", "city": "Munich", "experience_years": 20 },
+  { "id": "CND-2287", "name": "Fatima Al-Rashid", "email": "f.alrashid@quickmail.org", "phone": "+49 176 2938471", "status": "Under Review", "position_applied": "Accountant", "city": "Frankfurt", "experience_years": 8 },
+  { "id": "CND-9134", "name": "Stefan Novak", "email": "s.novak@postbox.cz", "phone": "+49 163 8472910", "status": "Rejected", "position_applied": "Electrician", "city": "Dresden", "experience_years": 15 },
+  { "id": "CND-3850", "name": "Clara Johansson", "email": "clara.j@nordmail.se", "phone": "+49 157 3928471", "status": "New", "position_applied": "Data Scientist", "city": "Hamburg", "experience_years": 3 },
+  { "id": "CND-5573", "name": "Dimitri Papadopoulos", "email": "d.papa@hellamail.gr", "phone": "+49 170 4829301", "status": "Interview Scheduled", "position_applied": "Chef", "city": "Cologne", "experience_years": 11 },
+  { "id": "CND-8206", "name": "Ingrid Hoffmann", "email": "i.hoffmann@bundesmail.de", "phone": "+49 155 2938470", "status": "Offer Extended", "position_applied": "Marketing Manager", "city": "Dusseldorf", "experience_years": 9 },
+  { "id": "CND-1749", "name": "Tomasz Kowalski", "email": "t.kowalski@polmail.pl", "phone": "+49 162 8374920", "status": "Under Review", "position_applied": "Logistics Coordinator", "city": "Leipzig", "experience_years": 6 },
+  { "id": "CND-4092", "name": "Maria Schneider", "email": "m.schneider@altpost.de", "phone": "+49 174 3829401", "status": "New", "position_applied": "Nurse", "city": "Nuremberg", "experience_years": 14 },
+  { "id": "CND-6835", "name": "Aleksandr Volkov", "email": "a.volkov@rusmail.ru", "phone": "+49 151 9283746", "status": "Interview Scheduled", "position_applied": "Senior Mechanical Engineer", "city": "Hannover", "experience_years": 18 },
+  { "id": "CND-0291", "name": "Leila Mansouri", "email": "l.mansouri@iranpost.ir", "phone": "+49 169 2837491", "status": "Under Review", "position_applied": "Software Developer", "city": "Bonn", "experience_years": 4 },
+  { "id": "CND-7458", "name": "Friedrich Weber", "email": "f.weber@oldmail.de", "phone": "+49 158 4738291", "status": "Rejected", "position_applied": "Electrician", "city": "Essen", "experience_years": 22 },
+  { "id": "CND-3164", "name": "Yuki Tanaka", "email": "y.tanaka@jpmail.jp", "phone": "+49 175 8293741", "status": "New", "position_applied": "Data Scientist", "city": "Karlsruhe", "experience_years": 2 },
+  { "id": "CND-5897", "name": "Elif Yilmaz", "email": "e.yilmaz@turkpost.tr", "phone": "+49 167 3829410", "status": "Offer Extended", "position_applied": "Accountant", "city": "Mannheim", "experience_years": 7 },
+  { "id": "CND-2530", "name": "Patrick O'Brien", "email": "p.obrien@irishmail.ie", "phone": "+49 153 4928371", "status": "Under Review", "position_applied": "Chef", "city": "Freiburg", "experience_years": 16 },
+  { "id": "CND-8763", "name": "Olga Petersen", "email": "o.petersen@danmail.dk", "phone": "+49 164 7382910", "status": "New", "position_applied": "Marketing Manager", "city": "Augsburg", "experience_years": 10 }
+]

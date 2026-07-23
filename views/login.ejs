@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CENIS Recruitment Portal v3.2.1 - Login</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; }
+    .login-outer { width: 100%; display: table; height: 100vh; }
+    .login-cell { display: table-cell; vertical-align: middle; text-align: center; }
+  </style>
+</head>
+<body>
+  <!-- LEGACY HEADER - DO NOT REMOVE (breaks nav in IE5.5) -->
+  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#1a3a5c">
+      <tr>
+        <td>
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="padding:8px 20px;">
+            <font color="#ffffff" face="Verdana" size="4"><b>CENIS</b></font>
+            <font color="#88aacc" face="Verdana" size="2">&nbsp;|&nbsp;Recruitment Portal v3.2.1</font>
+          </div>
+        </td>
+        <td align="right">
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+            <font color="#666666" face="Verdana" size="1">Build 20040312 // Internal Use Only</font>&nbsp;&nbsp;
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <%- legacyCruft() %>
+
+  <div class="login-outer">
+    <div class="login-cell">
+      <!-- GHOST FORM 1: hidden decoy that does nothing -->
+      <div style="position:absolute;left:-9999px;top:0;opacity:0;pointer-events:none;">
+        <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/fake-login" method="post" <%= chaosDataAttrs() %>>
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <input type="text" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="username" tabindex="-1" aria-hidden="true" autocomplete="off">
+            <input type="password" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="password" tabindex="-1" aria-hidden="true" autocomplete="off">
+            <button type="submit" id="<%= chaosId() %>" class="<%= chaosClass() %>" tabindex="-1" disabled>Login</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- GHOST FORM 2: another decoy, visibility hidden -->
+      <div style="visibility:hidden;height:0;overflow:hidden;">
+        <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/null" method="post" <%= chaosDataAttrs() %>>
+          <table>
+            <tr><td><input type="text" id="<%= chaosId() %>" name="user" tabindex="-1"></td></tr>
+            <tr><td><input type="password" id="<%= chaosId() %>" name="pass" tabindex="-1"></td></tr>
+            <tr><td><input type="submit" id="<%= chaosId() %>" value="Sign In" tabindex="-1" disabled></td></tr>
+          </table>
+        </form>
+      </div>
+
+      <%- legacyCruft() %>
+      <%- ghostElement('input') %>
+
+      <!-- ACTUAL LOGIN FORM buried in chaos -->
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+          <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="display:inline-block;text-align:left;background:#fff;border:2px solid #999;padding:30px 40px;box-shadow: 3px 3px 0 #888;">
+            <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+              <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <center>
+                  <font face="Verdana" size="3" color="#333"><b>System Login</b></font>
+                  <br><br>
+                </center>
+
+                <% if (error) { %>
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="color:red;background:#ffe0e0;border:1px solid red;padding:5px;margin-bottom:10px;">
+                    <font face="Verdana" size="2"><%= error %></font>
+                  </div>
+                <% } %>
+
+                <form action="/login" method="POST" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                  <%- legacyCruft() %>
+                  <%- ghostElement('input') %>
+
+                  <!-- Username field: label is a separate div, not connected via for/id -->
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                      <span id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                          <font face="Verdana" size="2">Username:</font>
+                        </div>
+                      </span>
+                    </div>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                      <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                        <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                          <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                            <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                              <input type="text" name="username" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <%- legacyCruft() %>
+                  <%- ghostElement('input') %>
+                  <br>
+
+                  <!-- Password field: even more nesting -->
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                      <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                        <span id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                          <font face="Verdana" size="2">Password:</font>
+                        </span>
+                      </div>
+                    </div>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                      <span id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                          <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                            <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                              <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                                <input type="password" name="password" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
+                              </div>
+                            </span>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+
+                  <%- ghostElement('button') %>
+                  <%- legacyCruft() %>
+                  <br><br>
+
+                  <!-- Submit button wrapped in absurd nesting -->
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                      <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                        <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                          <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                            <input type="submit" value="Login" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="background:#1a3a5c;color:#fff;border:1px solid #000;padding:6px 30px;font-family:Verdana;font-size:12px;cursor:pointer;">
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+
+                  <%- ghostElement('button') %>
+                </form>
+
+                <br>
+                <font face="Verdana" size="1" color="#888">
+                  &copy; 2004 CENIS GmbH. All rights reserved.<br>
+                  For technical support contact: admin@cenis-legacy.internal
+                </font>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Random noise elements at page bottom -->
+  <%- ghostElement('input') %>
+  <%- ghostElement('button') %>
+  <%- legacyCruft() %>
+  <div id="<%= chaosId() %>" style="display:none" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+    <form id="<%= chaosId() %>"><input type="text" name="username"><input type="password" name="password"><button>Login</button></form>
+  </div>
+  <%- easterEgg() %>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Archive :: CENIS Portal</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }</style>
+</head>
+<body>
+  <%- include('partials/topbar', { subtitle: 'Archived Records', active: 'archive' }) %>
+
+  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#d4ccc0;padding:4px 20px;border-bottom:1px solid #999;" <%= chaosDataAttrs() %>>
+    <font face="Verdana" size="1" color="#555">Home &gt; <b>Archive</b> (Rejected)</font>
+  </div>
+
+  <%- legacyCruft() %>
+
+  <div style="padding:20px;">
+    <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+      <font face="Verdana" size="3" color="#333"><b>Archived / Rejected Candidates (<%= candidates.length %>)</b></font>
+      <hr style="border:0;border-top:1px solid #c0b8ac;margin:12px 0">
+    </div>
+
+    <% if (candidates.length === 0) { %>
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>"><font face="Verdana" size="2" color="#777">No archived records.</font></div>
+    <% } else { %>
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+        <table width="100%" border="1" cellspacing="0" cellpadding="4" bgcolor="#ffffff" style="border-collapse:collapse;border:1px solid #999;" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+          <tr bgcolor="#c0b8ac" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+            <td><font face="Verdana" size="1"><b>Name</b></font></td>
+            <td><font face="Verdana" size="1"><b>ID</b></font></td>
+            <td><font face="Verdana" size="1"><b>Position</b></font></td>
+            <td><font face="Verdana" size="1"><b>City</b></font></td>
+            <td><font face="Verdana" size="1"><b>Action</b></font></td>
+          </tr>
+          <% candidates.forEach(function(c, idx){ %>
+            <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> bgcolor="<%= idx % 2 === 0 ? '#ffffff' : '#f0ece4' %>">
+              <td id="<%= chaosId() %>" class="<%= chaosClass() %>"><font face="Verdana" size="2"><%= c.name %></font></td>
+              <td id="<%= chaosId() %>" class="<%= chaosClass() %>"><font face="Courier New" size="2"><%= c.id %></font></td>
+              <td id="<%= chaosId() %>" class="<%= chaosClass() %>"><font face="Verdana" size="1"><%= c.position_applied %></font></td>
+              <td id="<%= chaosId() %>" class="<%= chaosClass() %>"><font face="Verdana" size="1"><%= c.city %></font></td>
+              <td id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <% if (idx % 2 === 0) { %>
+                  <a href="/candidate/<%= c.id %>" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="font-family:Verdana;font-size:10px;color:#1a3a5c">view record</a>
+                <% } else { %>
+                  <span onclick="window.location='/candidate/<%= c.id %>'" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="font-family:Verdana;font-size:10px;color:#1a3a5c;cursor:pointer;text-decoration:underline">open</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } %>
+  </div>
+
+  <%- easterEgg() %>
+  <%- legacyCruft() %>
+</body>
+</html>
