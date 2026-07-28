@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Overview :: CENIS Portal</title>
+  <title>Overview :: EPS Portal</title>
   <link rel="stylesheet" href="/style.css">
   <style>
     body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
@@ -57,17 +57,23 @@
         </div>
       </td>
 
-      <!-- positions breakdown -->
+      <!-- talent category breakdown, each row links into the filtered list -->
       <td>
         <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px" <%= chaosDataAttrs() %>>
-          <font face="Verdana" size="2" color="#333"><b>Applications by Position</b></font>
+          <font face="Verdana" size="2" color="#333"><b>Candidates by Talent Category</b></font>
           <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
           <table border="0" cellpadding="3" cellspacing="0" width="100%" id="<%= chaosId() %>" class="<%= chaosClass() %>">
-            <% Object.keys(byPosition).sort().forEach(function(pos){ %>
-              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
-                <td><font face="Verdana" size="1" color="#333"><%= pos %></font></td>
-                <td align="right" width="40"><font face="Verdana" size="1" color="#1a3a5c"><b><%= byPosition[pos] %></b></font></td>
-                <td width="120"><div style="background:#e0d8cc;height:9px;border:1px solid #c0b8ac"><div style="background:#5c7a1a;height:9px;width:<%= Math.round((byPosition[pos]/candidates.length)*100) %>%"></div></div></td>
+            <% categories.forEach(function(cat, ci){ %>
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                <td>
+                  <% if (ci % 2 === 0) { %>
+                    <a href="/dashboard?category=<%= cat.key %>" id="<%= chaosId() %>" class="<%= chaosClass() %>" style="font-family:Verdana;font-size:11px;color:#1a3a5c;text-decoration:none"><%= cat.label %></a>
+                  <% } else { %>
+                    <span onclick="window.location='/dashboard?category=<%= cat.key %>'" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="font-family:Verdana;font-size:11px;color:#1a3a5c;cursor:pointer"><%= cat.label %></span>
+                  <% } %>
+                </td>
+                <td align="right" width="40"><font face="Verdana" size="1" color="#1a3a5c"><b><%= cat.count %></b></font></td>
+                <td width="120"><div style="background:#e0d8cc;height:9px;border:1px solid #c0b8ac"><div style="background:#5c7a1a;height:9px;width:<%= Math.round((cat.count/candidates.length)*100) %>%"></div></div></td>
               </tr>
             <% }); %>
           </table>

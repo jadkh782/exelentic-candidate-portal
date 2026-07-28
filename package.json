@@ -1,5 +1,5 @@
 {
-  "name": "cenis-candidate-portal",
+  "name": "exelentic-candidate-portal",
   "version": "1.0.0",
   "description": "Legacy-style candidate recruitment portal with intentionally broken selectors (UiPath RPA training target)",
   "main": "server.js",

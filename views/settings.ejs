@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Account Settings :: CENIS Portal</title>
+  <title>Account Settings :: EPS Portal</title>
   <link rel="stylesheet" href="/style.css">
   <style>body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }</style>
 </head>
@@ -34,7 +34,7 @@
           <tr><td width="40%"><font face="Verdana" size="2">Display Name</font></td>
               <td><%- wrapChaos(`<input type="text" name="display_name" value="Administrator" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="width:220px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px">`, 2, 4) %></td></tr>
           <tr bgcolor="#f5f2ec"><td><font face="Verdana" size="2">E-Mail</font></td>
-              <td><%- wrapChaos(`<input type="text" name="email" value="admin@cenis-legacy.internal" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="width:220px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px">`, 2, 4) %></td></tr>
+              <td><%- wrapChaos(`<input type="text" name="email" value="admin@eps-legacy.internal" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="width:220px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px">`, 2, 4) %></td></tr>
           <tr><td><font face="Verdana" size="2">Records per page</font></td>
               <td><%- wrapChaos(`<select name="page_size" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px"><option>10</option><option selected>25</option><option>50</option><option>All</option></select>`, 1, 3) %></td></tr>
           <tr bgcolor="#f5f2ec"><td><font face="Verdana" size="2">Theme</font></td>

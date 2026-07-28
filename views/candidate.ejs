@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Record <%= candidate.id %> :: CENIS Portal</title>
+  <title>Record <%= candidate.id %> :: EPS Portal</title>
   <link rel="stylesheet" href="/style.css">
   <style>
     body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
@@ -76,8 +76,23 @@
               </tr>
 
               <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Talent Category</span></td>
+                <td><div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="font-family:Verdana;font-size:11px;padding:2px 6px;background:#e4ecd8;border:1px solid #8a9a6a"><%= candidate.category_label || 'Uncategorised' %></span></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
                 <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Years of Experience</span></td>
                 <td><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.experience_years %></span></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Availability</span></td>
+                <td><div id="<%= chaosId() %>"><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.availability || '-' %></span></div></td>
+              </tr>
+
+              <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+                <td valign="top"><span class="fld-lbl" id="<%= chaosId() %>">Desired Salary</span></td>
+                <td><span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.desired_salary || '-' %></span></td>
               </tr>
 
               <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
@@ -87,6 +102,99 @@
             </table>
 
             <%- legacyCruft() %>
+
+            <!-- PROFILE -->
+            <% if (candidate.summary) { %>
+              <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+              <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                <font face="Verdana" size="2" color="#1a3a5c"><b>Profile</b></font>
+                <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="margin-top:6px">
+                  <span class="fld-val" id="<%= chaosId() %>" <%= chaosDataAttrs() %>><%= candidate.summary %></span>
+                </div>
+              </div>
+            <% } %>
+
+            <!-- WORK HISTORY: every entry nested differently -->
+            <% if ((candidate.experience || []).length) { %>
+              <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+              <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                <font face="Verdana" size="2" color="#1a3a5c"><b>Professional Experience</b></font>
+                <% candidate.experience.forEach(function(job, ji) { %>
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="margin-top:10px;padding-left:8px;border-left:3px solid #c0b8ac">
+                    <% if (ji % 2 === 0) { %>
+                      <div id="<%= chaosId() %>" class="<%= chaosClass() %>"><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><font face="Verdana" size="2" color="#222"><b><%= job.title %></b></font></span></div>
+                    <% } else { %>
+                      <table border="0" cellpadding="0" cellspacing="0"><tr><td id="<%= chaosId() %>"><font face="Verdana" size="2" color="#222"><b><%= job.title %></b></font></td></tr></table>
+                    <% } %>
+                    <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                      <font face="Verdana" size="1" color="#666"><%= job.company %> &mdash; <%= job.location %> &nbsp;|&nbsp; <%= job.period %></font>
+                    </div>
+                    <ul id="<%= chaosId() %>" class="<%= chaosClass() %>" style="margin:4px 0 0 0;padding-left:18px">
+                      <% (job.bullets || []).forEach(function(b) { %>
+                        <li id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><font face="Verdana" size="1" color="#333"><%= b %></font></li>
+                      <% }); %>
+                    </ul>
+                  </div>
+                <% }); %>
+              </div>
+            <% } %>
+
+            <!-- SKILLS: rendered as a table of level bars -->
+            <% if ((candidate.skills || []).length) { %>
+              <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+              <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                <font face="Verdana" size="2" color="#1a3a5c"><b>Skills &amp; Proficiency</b></font>
+                <table border="0" cellpadding="3" cellspacing="0" width="100%" style="margin-top:6px" id="<%= chaosId() %>" class="<%= chaosClass() %>">
+                  <% candidate.skills.forEach(function(s, si) { %>
+                    <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> bgcolor="<%= si % 2 ? '#f5f2ec' : '#ffffff' %>">
+                      <td width="45%"><font face="Verdana" size="1" color="#333"><%= s.name %></font></td>
+                      <td width="120">
+                        <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#e0d8cc;height:9px;border:1px solid #c0b8ac;width:100px">
+                          <div style="background:#1a3a5c;height:9px;width:<%= s.level * 20 %>%"></div>
+                        </div>
+                      </td>
+                      <td><span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>><font face="Verdana" size="1" color="#666"><%= s.level %>/5</font></span></td>
+                    </tr>
+                  <% }); %>
+                </table>
+              </div>
+            <% } %>
+
+            <!-- EDUCATION / LANGUAGES / CERTS -->
+            <% if ((candidate.education || []).length || (candidate.languages || []).length || (candidate.certifications || []).length) { %>
+              <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr valign="top">
+                <td width="50%">
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <font face="Verdana" size="2" color="#1a3a5c"><b>Education</b></font>
+                    <% (candidate.education || []).forEach(function(e) { %>
+                      <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="margin-top:6px">
+                        <font face="Verdana" size="1" color="#222"><b><%= e.degree %></b></font><br>
+                        <font face="Verdana" size="1" color="#666"><%= e.institution %>, <%= e.year %></font>
+                      </div>
+                    <% }); %>
+                  </div>
+                </td>
+                <td>
+                  <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
+                    <font face="Verdana" size="2" color="#1a3a5c"><b>Languages</b></font>
+                    <div style="margin-top:6px">
+                      <% (candidate.languages || []).forEach(function(l) { %>
+                        <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="font-family:Verdana;font-size:10px;padding:1px 5px;background:#eee8dc;border:1px solid #c0b8ac;margin-right:3px"><%= l.name %> (<%= l.level %>)</span>
+                      <% }); %>
+                    </div>
+                    <br>
+                    <font face="Verdana" size="2" color="#1a3a5c"><b>Certifications</b></font>
+                    <ul id="<%= chaosId() %>" class="<%= chaosClass() %>" style="margin:6px 0 0 0;padding-left:18px">
+                      <% (candidate.certifications || []).forEach(function(ct) { %>
+                        <li id="<%= chaosId() %>" <%= chaosDataAttrs() %>><font face="Verdana" size="1" color="#333"><%= ct %></font></li>
+                      <% }); %>
+                    </ul>
+                  </div>
+                </td>
+              </tr></table>
+            <% } %>
+
             <hr style="border:0;border-top:1px solid #ccc;margin:15px 0">
 
             <!-- CV download: deeply nested, uses an iframe wrapper for extra pain -->

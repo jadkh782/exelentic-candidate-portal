@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Register New Application :: CENIS Portal</title>
+  <title>Register New Application :: EPS Portal</title>
   <link rel="stylesheet" href="/style.css">
   <style>body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }</style>
 </head>
@@ -65,13 +65,19 @@
           </tr>
 
           <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
-            <td><font face="Verdana" size="2">Position Applied For</font></td>
+            <td><font face="Verdana" size="2">Talent Category</font></td>
             <td>
               <%- ghostElement('input') %>
-              <%- wrapChaos(`<select name="position_applied" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;min-width:258px">
-                <option value="">-- select position --</option>
-                ${['Senior Mechanical Engineer','Software Developer','Gardener / Landscaper','Accountant','Electrician','Data Scientist','Chef','Marketing Manager','Logistics Coordinator','Nurse'].map(p=>`<option value="${p}"${values.position_applied===p?' selected':''}>${p}</option>`).join('')}
+              <%- wrapChaos(`<select name="category" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;min-width:258px">
+                ${categories.map(x=>`<option value="${x.key}"${values.category===x.key?' selected':''}>${x.label}</option>`).join('')}
               </select>`, 2, 4) %>
+            </td>
+          </tr>
+
+          <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" bgcolor="#f5f2ec">
+            <td><font face="Verdana" size="2">Position Applied For</font></td>
+            <td>
+              <%- wrapChaos(`<input type="text" name="position_applied" value="${(values.position_applied||'').replace(/"/g,'&quot;')}" id="${chaosId()}" class="${chaosClass()}" ${chaosDataAttrs()} style="width:250px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px" autocomplete="off">`, 2, 4) %>
             </td>
           </tr>
 

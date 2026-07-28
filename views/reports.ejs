@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Reports :: CENIS Portal</title>
+  <title>Reports :: EPS Portal</title>
   <link rel="stylesheet" href="/style.css">
   <style>
     body { font-family: 'Times New Roman', serif; background: #e8e0d4; margin: 0; font-size: 13px; }
@@ -64,16 +64,17 @@
     <%- legacyCruft() %>
     <br>
 
-    <!-- position table -->
+    <!-- talent category table -->
     <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="background:#fff;border:1px solid #999;padding:14px" <%= chaosDataAttrs() %>>
-      <font face="Verdana" size="2" color="#333"><b>Applications by Position</b></font>
+      <font face="Verdana" size="2" color="#333"><b>Candidates by Talent Category</b></font>
       <hr style="border:0;border-top:1px solid #ddd;margin:8px 0">
       <table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse;border:1px solid #ccc" width="60%" id="<%= chaosId() %>" class="<%= chaosClass() %>">
-        <tr bgcolor="#e8e0d4"><td><font face="Verdana" size="1"><b>Position</b></font></td><td><font face="Verdana" size="1"><b>Count</b></font></td></tr>
-        <% Object.keys(byPosition).sort().forEach(function(k){ %>
-          <tr id="<%= chaosId() %>" class="<%= chaosClass() %>">
+        <tr bgcolor="#e8e0d4"><td><font face="Verdana" size="1"><b>Talent Category</b></font></td><td><font face="Verdana" size="1"><b>Count</b></font></td><td><font face="Verdana" size="1"><b>Share</b></font></td></tr>
+        <% Object.keys(byCategory).sort().forEach(function(k){ %>
+          <tr id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
             <td><font face="Verdana" size="1"><%= k %></font></td>
-            <td align="center"><font face="Verdana" size="1"><%= byPosition[k] %></font></td>
+            <td align="center"><font face="Verdana" size="1"><%= byCategory[k] %></font></td>
+            <td align="center"><font face="Verdana" size="1" color="#666"><%= Math.round((byCategory[k]/candidates.length)*100) %>%</font></td>
           </tr>
         <% }); %>
       </table>
