@@ -10,6 +10,22 @@ and decoy/ghost elements are scattered throughout.
 - **Username:** `admin`
 - **Password:** `admin123`
 
+### Login-page selector traps (trainer notes)
+The two credential fields are deliberately hostile to naive selectors:
+
+- **Username is not an `<input>`.** The visible box is a `<span role="textbox" contenteditable>`
+  styled to look like a text field, with a misleading `aria-label="Kennung"`. A hidden
+  `<input type="hidden" name="username">` is filled by script on input / Enter / submit.
+  Selectors built on `tag=INPUT` + `type=text` find nothing typable. Enter inside the box submits.
+- **Two password inputs, the first one is a decoy.** A second `<input type="password">` sits
+  *before* the real one in DOM order with `aria-hidden=""` — an empty value, i.e. *false*, so unlike
+  the other ghost fields it **stays in the accessibility tree**. Only its wrapper is pushed
+  off-screen; the input's own attributes mirror the real field exactly. It has `tabindex="-1"` so
+  keyboard users skip it, and its `name` is `pwd`, so anything typed into it is discarded by the
+  server. A bot that grabs the *first* `type=password` logs in with an empty password.
+
+Both fields work normally for a human: click, type, Tab, type, Enter.
+
 ## Candidate data
 **171 generated candidates** across **7 talent categories**, ~20–30 per category. Each record carries a
 full CV: profile summary, 1–3 work-history entries with achievement bullets, rated skills (1–5),
