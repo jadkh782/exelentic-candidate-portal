@@ -11,20 +11,31 @@ and decoy/ghost elements are scattered throughout.
 - **Password:** `admin123`
 
 ### Login-page selector traps (trainer notes)
-The two credential fields are deliberately hostile to naive selectors:
+The three real credential controls are deliberately the **first three INPUT elements on the page**,
+so index-based selectors resolve predictably:
 
-- **Username is not an `<input>`.** The visible box is a `<span role="textbox" contenteditable>`
-  styled to look like a text field, with a misleading `aria-label="Kennung"`. A hidden
-  `<input type="hidden" name="username">` is filled by script on input / Enter / submit.
-  Selectors built on `tag=INPUT` + `type=text` find nothing typable. Enter inside the box submits.
-- **Two password inputs, the first one is a decoy.** A second `<input type="password">` sits
-  *before* the real one in DOM order with `aria-hidden=""` — an empty value, i.e. *false*, so unlike
-  the other ghost fields it **stays in the accessibility tree**. Only its wrapper is pushed
-  off-screen; the input's own attributes mirror the real field exactly. It has `tabindex="-1"` so
-  keyboard users skip it, and its `name` is `pwd`, so anything typed into it is discarded by the
-  server. A bot that grabs the *first* `type=password` logs in with an empty password.
+| idx | element | note |
+|----:|---------|------|
+| 1 | `input[type=text][name=username]` | the real username field |
+| 2 | `input[type=hidden][name=pwd]` | **decoy filler** — see below |
+| 3 | `input[type=password][name=password]` | the real password field |
 
-Both fields work normally for a human: click, type, Tab, type, Enter.
+**The trap is idx 2.** It carries the inviting name `pwd` and `aria-hidden=""` — an *empty* value,
+i.e. *false*, so unlike the other ghost fields it stays in the accessibility tree. But it is
+`type="hidden"`, so nothing can be typed into it: a bot that targets it (or that counts "the field
+after the username") silently submits an **empty password** and gets "Invalid credentials".
+
+All other decoy fields — the two ghost forms and the bottom noise form — are placed **after** the
+real form in DOM order, so they never disturb idx 1–3.
+
+Working selectors:
+```
+<webctrl tag='INPUT' type='text'     name='username' />
+<webctrl tag='INPUT' type='password' name='password' />
+```
+
+Everything behaves normally for a human: click, type, Tab (skips the hidden field automatically),
+type, Enter.
 
 ## Candidate data
 **171 generated candidates** across **7 talent categories**, ~20–30 per category. Each record carries a

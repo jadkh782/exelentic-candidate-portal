@@ -33,30 +33,12 @@
 
   <div class="login-outer">
     <div class="login-cell">
-      <!-- GHOST FORM 1: hidden decoy that does nothing -->
-      <div style="position:absolute;left:-9999px;top:0;opacity:0;pointer-events:none;">
-        <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/fake-login" method="post" <%= chaosDataAttrs() %>>
-          <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
-            <input type="text" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="username" tabindex="-1" aria-hidden="true" autocomplete="off">
-            <input type="password" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="password" tabindex="-1" aria-hidden="true" autocomplete="off">
-            <button type="submit" id="<%= chaosId() %>" class="<%= chaosClass() %>" tabindex="-1" disabled>Login</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- GHOST FORM 2: another decoy, visibility hidden -->
-      <div style="visibility:hidden;height:0;overflow:hidden;">
-        <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/null" method="post" <%= chaosDataAttrs() %>>
-          <table>
-            <tr><td><input type="text" id="<%= chaosId() %>" name="user" tabindex="-1"></td></tr>
-            <tr><td><input type="password" id="<%= chaosId() %>" name="pass" tabindex="-1"></td></tr>
-            <tr><td><input type="submit" id="<%= chaosId() %>" value="Sign In" tabindex="-1" disabled></td></tr>
-          </table>
-        </form>
-      </div>
-
       <%- legacyCruft() %>
-      <%- ghostElement('input') %>
+
+      <!-- NOTE ON DOM ORDER: the three real credential controls are deliberately the
+           first three INPUT elements on the page, so index-based selectors resolve to
+           idx 1 = username, idx 2 = hidden filler, idx 3 = password.
+           Every decoy field therefore lives AFTER the real form, further down the page. -->
 
       <!-- ACTUAL LOGIN FORM buried in chaos -->
       <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
@@ -77,9 +59,9 @@
 
                 <form action="/login" method="POST" id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
                   <%- legacyCruft() %>
-                  <%- ghostElement('input') %>
 
-                  <!-- Username field: label is a separate div, not connected via for/id -->
+                  <!-- Username field: label is a separate div, not connected via for/id.
+                       This is input idx 1 on the page. -->
                   <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
                     <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
                       <span id="<%= chaosId() %>" class="<%= chaosClass() %>">
@@ -93,16 +75,7 @@
                         <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
                           <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
                             <div id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
-                              <%
-                                // SELECTOR TRICK: the visible "username box" is not an <input> at all.
-                                // It is a contenteditable <span> styled to look like one. The real
-                                // <input name="username"> is type=hidden and is filled by script.
-                                // Any selector built on tag=INPUT / type=text finds nothing typable.
-                                var usrBoxId = chaosId();
-                                var usrHidId = chaosId();
-                              %>
-                              <span role="textbox" contenteditable="plaintext-only" spellcheck="false" aria-label="Kennung" aria-multiline="false" id="<%= usrBoxId %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %> style="display:inline-block;box-sizing:border-box;width:210px;min-height:23px;padding:4px;border:1px solid #aaa;background:#fff;font-family:Verdana;font-size:12px;line-height:13px;outline:none;white-space:nowrap;overflow:hidden;cursor:text;"></span>
-                              <input type="hidden" name="username" id="<%= usrHidId %>" value="">
+                              <input type="text" name="username" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
                             </div>
                           </div>
                         </span>
@@ -111,7 +84,6 @@
                   </div>
 
                   <%- legacyCruft() %>
-                  <%- ghostElement('input') %>
                   <br>
 
                   <!-- Password field: even more nesting -->
@@ -130,15 +102,14 @@
                             <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
                               <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
                                 <!--
-                                  SELECTOR TRICK: a decoy password input sits FIRST in DOM order.
-                                  aria-hidden="" is an empty (i.e. false) value, so unlike the other
-                                  ghost fields it stays in the accessibility tree. Only the wrapper is
-                                  pushed off-screen; the input's own attributes mirror the real one.
-                                  A bot that grabs the first type=password types into the void.
+                                  SELECTOR TRICK: a hidden filler input sits directly in front of
+                                  the password field. It is input idx 2 on the page, which pushes
+                                  the real password field to idx 3. It carries an inviting name and
+                                  aria-hidden="" (empty = false, so it is NOT excluded from the
+                                  accessibility tree), but type=hidden means nothing can be typed
+                                  into it - a bot that targets it silently sends an empty password.
                                 -->
-                                <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;">
-                                  <input type="password" name="pwd" aria-hidden="" tabindex="-1" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
-                                </div>
+                                <input type="hidden" name="pwd" aria-hidden="" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> value="">
                                 <input type="password" name="password" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
                               </div>
                             </span>
@@ -168,34 +139,6 @@
                   <%- ghostElement('button') %>
                 </form>
 
-                <script>
-                (function(){
-                  var box = document.getElementById(<%- JSON.stringify(usrBoxId) %>);
-                  var hid = document.getElementById(<%- JSON.stringify(usrHidId) %>);
-                  var form = hid.form;
-                  function sync(){ hid.value = box.innerText.replace(/[\r\n]+/g, '').trim(); }
-                  // An empty contenteditable does not reliably take focus from a plain click,
-                  // so focus it explicitly and drop the caret at the end of any existing text.
-                  box.addEventListener('click', function(){
-                    box.focus();
-                    var sel = window.getSelection(), rng = document.createRange();
-                    rng.selectNodeContents(box); rng.collapse(false);
-                    sel.removeAllRanges(); sel.addRange(rng);
-                  });
-                  box.addEventListener('input', sync);
-                  box.addEventListener('blur', sync);
-                  box.addEventListener('keydown', function(e){
-                    if (e.key === 'Enter') { e.preventDefault(); sync(); form.requestSubmit ? form.requestSubmit() : form.submit(); }
-                  });
-                  box.addEventListener('paste', function(e){
-                    // keep the box plain text even where contenteditable="plaintext-only" is unsupported
-                    e.preventDefault();
-                    document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text').replace(/[\r\n]+/g, ''));
-                  });
-                  form.addEventListener('submit', sync);
-                })();
-                </script>
-
                 <br>
                 <font face="Verdana" size="1" color="#888">
                   &copy; 2004 Exelentic Personal Services GmbH. All rights reserved.<br>
@@ -207,6 +150,31 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- DECOY FORMS: kept as selector bait, but deliberately placed AFTER the real form
+       so they never occupy input idx 1-3. -->
+
+  <!-- GHOST FORM 1: hidden decoy that does nothing -->
+  <div style="position:absolute;left:-9999px;top:0;opacity:0;pointer-events:none;">
+    <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/fake-login" method="post" <%= chaosDataAttrs() %>>
+      <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
+        <input type="text" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="username" tabindex="-1" aria-hidden="true" autocomplete="off">
+        <input type="password" id="<%= chaosId() %>" class="<%= chaosClass() %>" name="password" tabindex="-1" aria-hidden="true" autocomplete="off">
+        <button type="submit" id="<%= chaosId() %>" class="<%= chaosClass() %>" tabindex="-1" disabled>Login</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- GHOST FORM 2: another decoy, visibility hidden -->
+  <div style="visibility:hidden;height:0;overflow:hidden;">
+    <form id="<%= chaosId() %>" class="<%= chaosClass() %>" action="/null" method="post" <%= chaosDataAttrs() %>>
+      <table>
+        <tr><td><input type="text" id="<%= chaosId() %>" name="user" tabindex="-1"></td></tr>
+        <tr><td><input type="password" id="<%= chaosId() %>" name="pass" tabindex="-1"></td></tr>
+        <tr><td><input type="submit" id="<%= chaosId() %>" value="Sign In" tabindex="-1" disabled></td></tr>
+      </table>
+    </form>
   </div>
 
   <!-- Random noise elements at page bottom -->
