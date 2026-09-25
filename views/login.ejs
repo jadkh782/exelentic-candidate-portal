@@ -102,14 +102,21 @@
                             <span id="<%= chaosId() %>" class="<%= chaosClass() %>" <%= chaosDataAttrs() %>>
                               <div id="<%= chaosId() %>" class="<%= chaosClass() %>">
                                 <!--
-                                  SELECTOR TRICK: a hidden filler input sits directly in front of
-                                  the password field. It is input idx 2 on the page, which pushes
-                                  the real password field to idx 3. It carries an inviting name and
-                                  aria-hidden="" (empty = false, so it is NOT excluded from the
-                                  accessibility tree), but type=hidden means nothing can be typed
-                                  into it - a bot that targets it silently sends an empty password.
+                                  SELECTOR TRICK: a decoy password input sits directly in front of
+                                  the real one. It is input idx 2 on the page, which puts the real
+                                  password field on idx 3.
+
+                                  It is a genuine type=password whose own attributes mirror the real
+                                  field exactly - only the wrapper is pushed off-screen. It carries
+                                  aria-hidden="" (an EMPTY value, i.e. false), so unlike the other
+                                  ghost fields it deliberately stays in the accessibility tree.
+                                  tabindex="-1" keeps keyboard users on the real field, and its name
+                                  (pwd) is ignored by the server - so anything typed into it is
+                                  silently discarded and the login fails with an empty password.
                                 -->
-                                <input type="hidden" name="pwd" aria-hidden="" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> value="">
+                                <div id="<%= chaosId() %>" class="<%= chaosClass() %>" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;">
+                                  <input type="password" name="pwd" aria-hidden="" tabindex="-1" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
+                                </div>
                                 <input type="password" name="password" class="<%= chaosClass() %>" id="<%= chaosId() %>" <%= chaosDataAttrs() %> style="width:200px;padding:4px;border:1px solid #aaa;font-family:Verdana;font-size:12px;" autocomplete="off">
                               </div>
                             </span>

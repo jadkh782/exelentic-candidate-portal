@@ -17,13 +17,19 @@ so index-based selectors resolve predictably:
 | idx | element | note |
 |----:|---------|------|
 | 1 | `input[type=text][name=username]` | the real username field |
-| 2 | `input[type=hidden][name=pwd]` | **decoy filler** — see below |
+| 2 | `input[type=password][name=pwd]` | **decoy** — see below |
 | 3 | `input[type=password][name=password]` | the real password field |
 
-**The trap is idx 2.** It carries the inviting name `pwd` and `aria-hidden=""` — an *empty* value,
-i.e. *false*, so unlike the other ghost fields it stays in the accessibility tree. But it is
-`type="hidden"`, so nothing can be typed into it: a bot that targets it (or that counts "the field
-after the username") silently submits an **empty password** and gets "Invalid credentials".
+**The trap is idx 2.** It is a genuine `type="password"` whose own attributes mirror the real field
+exactly (identical `style`, same type) — only its wrapper is pushed off-screen, so it is invisible
+to a human but indistinguishable from the real field by attributes alone. It carries
+`aria-hidden=""` — an *empty* value, i.e. *false* — so unlike the other ghost fields it deliberately
+**stays in the accessibility tree**. `tabindex="-1"` keeps keyboard users on the real field, and its
+name (`pwd`) is ignored by the server.
+
+Net effect: **the first `type=password` in DOM order is the decoy.** A bot that grabs
+`tag=INPUT type=password idx=1` types into the void and submits an empty password →
+"Invalid credentials".
 
 All other decoy fields — the two ghost forms and the bottom noise form — are placed **after** the
 real form in DOM order, so they never disturb idx 1–3.
